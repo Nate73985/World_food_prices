@@ -1,14 +1,29 @@
-import requests, csv
+import requests
+import csv
 
 
 class DataExtraction:
-    def __init__(self, csv_file, output_csv_file, url, base_currency="USD_Amount"):
+    def __init__(self, csv_file: str, output_csv_file: str, url: str,
+                 base_currency: str ="USD_Amount"):
+        """
+        This intiates all the required parameters
+        :param csv_file:
+        :param output_csv_file:
+        :param url:
+        :param base_currency:
+        """
         self.csv_file = csv_file
         self.output_csv_file = output_csv_file
         self.url = url
         self.base_currency = base_currency
         
-    def convert_to_usd(self, amount, rate):
+    def convert_to_usd(self, amount: float, rate: float) -> float:
+        """
+
+        :param amount:
+        :param rate:
+        :return:
+        """
         return amount * rate
 
     def download(self):
@@ -55,6 +70,14 @@ def read_from_s3():
 
 
 def labeled_barplot(data, feature, perc=False, n=None):
+    """
+
+    :param data:
+    :param feature:
+    :param perc:
+    :param n:
+    :return:
+    """
     total = len(data[feature])
     count = data[feature].nunique()
     if n is None:
