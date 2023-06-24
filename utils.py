@@ -52,3 +52,26 @@ class DataExtraction:
 def read_from_s3():
     #read from s3
     return df
+
+
+def labeled_barplot(data, feature, perc=False, n=None):
+    total = len(data[feature])
+    count = data[feature].nunique()
+    if n is None:
+        plt.figure(figsize=(count + 1, 5))
+    else:
+        plt.figure(figsize=(n + 1, 5))
+
+    plt.xticks(rotation=90, fontsize=15)
+    ax = sns.countplot(data=data,x=feature,palette="Paired",order=data[feature].value_counts().index[:n].sort_values(),)
+
+    for p in ax.patches:
+        if perc == True:
+            label = "{:.1f}%".format(100 * p.get_height() / total)
+        else:
+            label = p.get_height()
+
+        x = p.get_x() + p.get_width() / 2
+        y = p.get_height()
+        ax.annotate(label,(x, y),ha="center",va="center",size=12,xytext=(0, 5),textcoords="offset points",)
+    plt.show()
